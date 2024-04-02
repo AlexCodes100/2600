@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <link rel="stylesheet" href="css/solar.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+  <link rel="shortcut icon" href="img/question.svg" type="image/x-icon" />
+  <title>Using MVC</title>
+</head>
+
+<body>
+  <div class="container">
+    <hr>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+        <div class="container-fluid" role="banner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#39cbfb"
+            class="bi bi-question-circle-fill" viewBox="0 0 16 16">
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247m2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
+          </svg>&nbsp;
+          <a class="navbar-brand 2">MVC</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 h6">
+              <li class="nav-item ml-4 active">
+                <a class="nav-link btn btn-outline-info" aria-current="page" data-page="home">Home</a>
+              </li>
+              <li class="nav-item dropdown" data-authenticated>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="menu" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                 Member Page
+                </a>
+                <ul class="dropdown-menu" role="listbox" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a class="dropdown-item h3" role="menuitem" data-page="posts">
+                      Posts</a>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>    
+                  <li>
+                    <a class="dropdown-item h3" role="menuitem" data-page="search">Search Posts</a>
+                  </li>
+                </ul>
+              </li>
+                        <li class="nav-item ml-4">
+                <a class="nav-link btn btn-outline-info" data-page="about">About</a>
+              </li>
+            </ul>
+            <form class="d-flex text-end h3 text-white" >
+              <div data-nonAuthenticated>
+                <a  data-page ="register"  class="btn btn-outline-info" >register</a>
+              <a  data-page="login" class="btn btn-outline-info">login</a>
+              </div>              
+              <div data-authenticated><img src="img/person.svg" alt="person" width="30">&nbsp;<span></span><button class="btn btn-info text-end" id="signout">Logout</button></div> 
+            </form>
+              </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <dialog id="noticeDialog" class="alert alert-dark text-white h4">
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <!--One column in any screen device-->
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-header h2 text-white bg-info text-center">
+              Terms and Conditions
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>
+                <ol>
+                  <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus enim, impedit illum voluptate
+                    iure in distinctio asperiores, repellat ipsam sed eos reiciendis officia blanditiis illo unde
+                    aperiam maxime mollitia aspernatur.</li>
+                  <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum optio ipsam ipsa tempore ab iste
+                    dolore distinctio earum et? Quia officia alias aperiam fugit quas molestias odio repellendus,
+                    officiis aut!</li>
+                  <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum iure commodi unde possimus
+                    voluptates sed iste earum fuga quis architecto sint ullam dolore, quia similique consectetur, quo
+                    tempora, harum assumenda!</li>
+                  <li>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet incidunt excepturi totam molestias,
+                    repellat dolore quia eos ullam vero nisi, natus, recusandae asperiores temporibus deserunt
+                    voluptates nulla libero nemo. A?</li>
+                  <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam iure, quos repudiandae
+                    reprehenderit vel hic? Nam quis vel, id debitis repellendus necessitatibus facilis animi, adipisci
+                    explicabo ipsum exercitationem eius sequi.</li>
+                </ol>
+                </p>
+                <hr>
+                <footer class="blockquote-footer">
+                  <div class="input-group mb-3">
+                    <div class="input-group-text">
+                      <input class="form-check-input mt-0" type="checkbox" value=""
+                        aria-label="Checkbox for following text input" id="agree">
+                    </div>
+                    <input type="text" class="form-control" aria-label="I agree to terms & conditions" value="I agree"
+                      disabled>
+                  </div>
+            </div>
+
+            <form method="dialog" class="text-center">
+              <button class="btn btn-lg btn-info" id="noticeButton">OK</button>
+            </form>
+            </footer>
+            </blockquote>
+          </div>
+        </div>
+        <div class="col-md-1"> </div>
+
+
+
+
+    </dialog>
+    <hr>
+    <section id="Home">
+      <div class="row">
+        <div class="col-md-3"></div>
+  
+        <div class="col-md-6">
+          <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="img/1-circle.svg" class="d-block w-100" alt="first image">
+              </div>
+              <div class="carousel-item">
+                <img src="img/2-circle.svg" class="d-block w-100" alt="second image">
+              </div>
+              <div class="carousel-item">
+                <img src="img/3-circle.svg" class="d-block w-100" alt="third image">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+  
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+    </section>
+    <section id="Posts">
+      <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <!--One column in any screen device-->
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-header bg-primary text-white text-center h2" role="heading">
+              Forum Posts
+            </div>
+            <div class="card-body">              
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam amet ipsum ipsa, distinctio ducimus voluptate voluptatum sed impedit nulla necessitatibus! Rerum delectus quaerat dolores illo quam id quasi rem modi.
+              </div>
+          </div>
+        </div>
+        <div class="col-md-1"> </div>
+      </div>
+    </section>
+    <section id="Search Posts">
+      <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <!--One column in any screen device-->
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-header bg-primary text-white text-center h2" role="heading">
+              Search Forum Posts
+            </div>
+            <div class="card-body">              
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam amet ipsum ipsa, distinctio ducimus voluptate voluptatum sed impedit nulla necessitatibus! Rerum delectus quaerat dolores illo quam id quasi rem modi.
+              </div>
+          </div>
+        </div>
+        <div class="col-md-1"> </div>
+      </div>
+    </section>   
+    <section id="Manage Users">
+      <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <!--One column in any screen device-->
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-header bg-primary text-white text-center h2" role="heading">
+              Manage Users
+            </div>
+            <div class="card-body">              
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam amet ipsum ipsa, distinctio ducimus voluptate voluptatum sed impedit nulla necessitatibus! Rerum delectus quaerat dolores illo quam id quasi rem modi.
+              </div>
+          </div>
+        </div>
+        <div class="col-md-1"> </div>
+      </div>
+    </section>
+    <section id="Manage Content">
+      <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <!--One column in any screen device-->
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-header bg-primary text-white text-center h2" role="heading">
+              Manage Content
+            </div>
+            <div class="card-body">              
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam amet ipsum ipsa, distinctio ducimus voluptate voluptatum sed impedit nulla necessitatibus! Rerum delectus quaerat dolores illo quam id quasi rem modi.
+              </div>
+          </div>
+        </div>
+        <div class="col-md-1"> </div>
+      </div>
+    </section>
+    <section id="Register">
+      <div class="card">
+        <div class="card-header bg-info text-white text-center h2" role="heading">
+            Sign Up
+        </div>
+        <div class="card-body text-white h5" >
+            <form class="row g-3">
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control-plaintext" name="email"
+                            placeholder="email@example.com" required>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="password" minlength="8"
+                            maxlength="30">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="confirm" class="col-sm-2 col-form-label">Confirm Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="confirm" name="confirm" minlength="8"
+                            maxlength="30">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                  <div class="alert alert-warning h3" name="error"></div>
+                  </div>
+
+                <div class="input-group mb-3">
+                 
+                    <div class="btn-group btn-lg text-white h4 text-end" role="group" aria-label="authentication">
+                        <button type="reset" class="btn btn-info text-end">Clear</button>
+                        <button type="submit" class="btn btn-primary text-end" id="signup">Sign up</button>
+                    </div>
+            </form>
+        </div>
+        </div>
+    </section>
+    <section id="Login">
+      <div class="card">
+        <div class="card-header bg-info text-white text-center h2" role="heading">
+         Sign In
+        </div>
+        <div class="card-body text-white h5">
+          <form class="row g-3">
+          <div class="mb-3 row">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control-plaintext" name="email" placeholder="email@example.com" required>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="password" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" name="password" minlength="8" maxlength="30">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <!-- <label class="col-sm-12 col-form-label" id="error1"></label> -->
+            <div class="alert alert-warning h3" name="error"></div>
+          </div>        
+          <div class="input-group mb-3">
+            <div class="btn-group btn-lg text-white h4 text-end" role="group" aria-label="authentication">
+            <button type="reset" class="btn btn-info text-end">Clear</button>
+            <button type="submit" class="btn btn-primary text-end" id="signin">Sign in</button>
+           </div>
+        </form>
+      </div>
+      </div>
+    </section>
+    <section id="About">
+      <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <!--One column in any screen device-->
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-header bg-primary text-white text-center h2" role="heading">
+              Full Stack Web Development I (CPSC 2600)
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>
+                <h4>
+                  Students explore web application development concepts and practices, including common
+                  full-stack architectures, server-side scripting languages and frameworks, and databases.
+                  Students learn the basics of server side-scripting and build a basic web application
+                  using contemporary languages, libraries, and frameworks.
+                </h4>
+                </p>
+                <hr>
+                <footer class="blockquote-footer">
+                  Langara College (<cite title="CPSC 2600"><a
+                      href="https://langara.ca/programs-and-courses/courses/CPSC/2600.html">CPSC 2600
+                      Course
+                      Description</a></cite>)
+                </footer>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1"> </div>
+      </div>
+    </section>
+    <section id="404">
+      <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <!--One column in any screen device-->
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>
+                <h4>
+                  File not found
+                </h4>
+                </p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1"> </div>
+      </div>
+    </section>
+    <div class="h4 text-center">
+      <hr>
+      <br />
+      <footer id="footer">
+        <span class="h4">Follow Us</span>&nbsp;&nbsp;
+        <button class="btn btn-danger">
+          <a href="https://www.youtube.com" class="text-white"><i class="bi bi-youtube h3"
+              arria-label="youtube"></i></a></button>&nbsp;
+        <button class="btn btn-primary">
+          <a href="https://www.twitter.com" class="text-white"><i class="bi bi-twitter h3"
+              aria-label="twitter"></i></a></button>&nbsp;
+        <button class="btn btn-success">
+          <a href="https://www.whatsapp.com/" class="text-white">&nbsp;
+            <i class="bi bi-whatsapp h3" aria-label="whatsapp"></i>&nbsp;</a></button>&nbsp;
+        <button class="btn btn-warning">
+          <a href="https://www.instagram.com/" class="text-white"><i class="bi bi-instagram h3"
+              aria-label="instagram"></i></a>
+        </button> <br> <br>
+        <div class="text-white h2">
+          <kbd> &copy; <span></span>. M. Bouguerra. All Rights Reserved. </kbd>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+ 
+</body>
+
+</html>

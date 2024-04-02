@@ -1,0 +1,19 @@
+{
+  "name": "webserver",
+  "version": "1.0.0",
+  "description": "Using Node.js as Webserver",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "author": "M. Bouguerra",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "express-fileupload": "^1.5.0"
+  }
+}
