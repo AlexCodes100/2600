@@ -49,6 +49,9 @@
                   </li>
                 </ul>
               </li>
+              <li class="nav-item ml-4" data-authenticated-admin>
+                <a class="nav-link btn btn-outline-info" data-page="admin">Admin Tools</a>
+              </li>
                         <li class="nav-item ml-4">
                 <a class="nav-link btn btn-outline-info" data-page="about">About</a>
               </li>
@@ -208,6 +211,53 @@
           </div>
           <div class="col-md-1"></div>
       </div>
+  </section>
+
+  <section id="adminTab" style="display: none;">
+    <!-- User Management Card -->
+    <div class="card">
+      <div class="card-header">
+        User Management
+      </div>
+      <div class="card-body">
+        <table id="userTable" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Since</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="userManagement">
+            <!-- Rows will be populated with JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Transaction Management Card -->
+    <div class="card">
+      <div class="card-header">
+        Transaction Management
+      </div>
+      <div class="card-body">
+        <table id="transactionTable" class="table">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="transactionManagement">
+            <!-- Rows will be populated with JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
   
     <section id="Search Posts">

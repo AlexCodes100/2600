@@ -22,6 +22,7 @@
       section: "Register",
     },
     login: { title: "Login Page", url: "Account/Login", section: "Login" },
+    admin: { title: "Admin Page", url: "Admin", section: "adminTab" },
   };
   const registerWarning = document.querySelector('#Register div[name="error"]');
   const loginWarning = document.querySelector('#Login div[name="error"]');
@@ -90,7 +91,7 @@
           `/${navigation.posts.url}`
         );
         displaySection(navigation.posts);
-        authorize(true);
+        authorize(true, email);
         document.querySelector(
           "[data-authenticated] > span"
         ).innerHTML = `Welcome ${email}!`;
@@ -112,7 +113,7 @@
       console.log(reply, reply);
       window.history.pushState(navigation.home, "", `/${navigation.home.url}`);
       displaySection(navigation.home);
-      authorize(false);
+      authorize(false, email);
       email = undefined;
       activeEmail = undefined;
       clearTable();
@@ -139,7 +140,7 @@
         `/${navigation.posts.url}`
       );
       displaySection(navigation.posts);
-      authorize(true);
+      authorize(true, email);
       document.querySelector(
         "[data-authenticated] > span"
       ).innerHTML = `Welcome ${email}!`;
@@ -180,40 +181,37 @@
 
     // Update the transaction history table
     getTransactionsAndBuildTable();
-
   }
 
   const clearTable = () => {
-    const table = document.getElementById('transactionHistory');
+    const table = document.getElementById("transactionHistory");
     while (table.firstChild) {
-        table.removeChild(table.firstChild);
+      table.removeChild(table.firstChild);
     }
   };
 
-async function getTransactionsAndBuildTable() {
+  async function getTransactionsAndBuildTable() {
     const email = activeEmail;
 
     const response = await fetch(`/getTransactions?email=${email}`);
     const transactions = await response.json();
 
-    const table = document.getElementById('transactionHistory');
+    const table = document.getElementById("transactionHistory");
     // Clear the table
     while (table.firstChild) {
-        table.removeChild(table.firstChild);
+      table.removeChild(table.firstChild);
     }
 
     // Add a row for each transaction
-    transactions.forEach(transaction => {
-        const row = table.insertRow(-1);
-        const dateCell = row.insertCell(0);
-        const amountCell = row.insertCell(1);
+    transactions.forEach((transaction) => {
+      const row = table.insertRow(-1);
+      const dateCell = row.insertCell(0);
+      const amountCell = row.insertCell(1);
 
-        dateCell.textContent = new Date(transaction.date).toLocaleString();
-        amountCell.textContent = transaction.amount;
+      dateCell.textContent = new Date(transaction.date).toLocaleString();
+      amountCell.textContent = transaction.amount;
     });
-}
-
-
+  }
 
   const setActivePage = (section) => {
     console.log(section);
@@ -235,17 +233,30 @@ async function getTransactionsAndBuildTable() {
       } else hide(section);
     });
   };
-  const authorize = (isAuthenticated) => {
+const authorize = (isAuthenticated, username) => {
     const authenticated = document.querySelectorAll("[data-authenticated]");
     const nonAuthenticated = document.querySelector("[data-nonAuthenticated]");
+    const adminAuthenticated = document.querySelectorAll("[data-authenticated-admin]"); // Select elements with the data-authenticated-admin attribute
+    const adminTab = document.getElementById('adminTab'); // Get the admin tab
+
     if (isAuthenticated) {
-      authenticated.forEach((element) => show(element));
-      hide(nonAuthenticated);
+        authenticated.forEach((element) => show(element));
+        hide(nonAuthenticated);
+
+        // If the username is "admin", show the admin tab and the elements with the data-authenticated-admin attribute
+        if (username === 'admin') {
+            adminAuthenticated.forEach((element) => show(element)); // Show elements with the data-authenticated-admin attribute
+        } else {
+            hide(adminTab);
+            adminAuthenticated.forEach((element) => hide(element)); // Hide elements with the data-authenticated-admin attribute
+        }
     } else {
-      authenticated.forEach((element) => hide(element));
-      show(nonAuthenticated);
+        authenticated.forEach((element) => hide(element));
+        show(nonAuthenticated);
+        hide(adminTab); // Hide the admin tab
+        adminAuthenticated.forEach((element) => hide(element)); // Hide elements with the data-authenticated-admin attribute
     }
-  };
+};
   // Handle forward/back buttons
   window.onpopstate = (event) => {
     // If a state has been provided, we have a "simulated" page

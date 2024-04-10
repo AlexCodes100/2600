@@ -105,4 +105,6 @@ memberController.get('/getTransactions', async (request, response) => {
     response.status(200).json(transactions);
 });
 
+
+
 module.exports = memberController;
