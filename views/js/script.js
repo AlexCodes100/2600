@@ -241,6 +241,7 @@
       const roleCell = row.insertCell(1);
       const sinceCell = row.insertCell(2);
       const actionCell = row.insertCell(3);
+      const elevateCell = row.insertCell(4);
 
       usernameCell.textContent = user.email;
       roleCell.textContent = user.role;
@@ -270,6 +271,29 @@
         }
       });
       actionCell.appendChild(deleteButton);
+
+      const elevateButton = document.createElement('button');
+        elevateButton.textContent = 'Elevate to Admin';
+        elevateButton.addEventListener('click', async () => {
+            // Show a confirmation dialog
+            if (confirm('Are you sure you want to elevate this user to admin?')) {
+                const response = await fetch('/elevateUser/' + user._id, { method: 'PUT' });
+                const result = await response.json();
+
+                // Handle the response here...
+                if (result.error) {
+                    console.log(result.error);
+                } else {
+                    console.log(result.success);
+                    // Show a success message
+                    alert('User elevated to admin successfully');
+
+                    // Update the user's role in the table
+                    roleCell.textContent = 'admin';
+                }
+            }
+        });
+        elevateCell.appendChild(elevateButton);
     });
   }
 

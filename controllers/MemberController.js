@@ -143,4 +143,13 @@ memberController.delete('/deleteTransaction/:id', async (request, response) => {
     response.status(200).json({ success: 'Transaction deleted' });
 });
 
+memberController.put('/elevateUser/:id', async (request, response) => {
+    const id = request.params.id;
+
+    // Update the user's role
+    await User.findByIdAndUpdate(id, { role: 'admin' });
+
+    response.status(200).json({ success: 'User elevated to admin' });
+});
+
 module.exports = memberController;
