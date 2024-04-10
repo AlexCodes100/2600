@@ -1,6 +1,7 @@
 const config = require(`${__dirname}/../server/config/config`);
 const utils = require(`${__dirname}/../server/utils`);
 const User = require(`${__dirname}/../models/user`); // Import the Mongoose User model
+const Transaction = require('../models/transaction'); // Import the Transaction model
 const express = require("express");
 const bcrypt = require("bcrypt");
 const memberController = express.Router();
@@ -62,6 +63,46 @@ memberController.post("/signout", (request, response) => {
             message: `${email} logout successfully.`,
         },
     });
+});
+
+memberController.post('/addTransaction', async (request, response) => {
+    const { email, amount } = request.body;
+
+    // Find the user associated with the email
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+        return response.status(400).json({ error: 'User not found' });
+    }
+
+    // Create a new transaction
+    const newTransaction = new Transaction({
+        amount: amount,
+        user: user._id
+    });
+
+    // Save the transaction
+    await newTransaction.save();
+
+    // Send the transaction data back to the client
+    response.status(200).json(newTransaction);
+});
+
+memberController.get('/getTransactions', async (request, response) => {
+    const { email } = request.query;
+
+    // Find the user associated with the email
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+        return response.status(400).json({ error: 'User not found' });
+    }
+
+    // Find all transactions associated with the user
+    const transactions = await Transaction.find({ user: user._id });
+
+    // Send the transactions back to the client
+    response.status(200).json(transactions);
 });
 
 module.exports = memberController;

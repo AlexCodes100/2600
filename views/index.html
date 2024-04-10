@@ -166,23 +166,50 @@
     </section>
     <section id="Posts">
       <div class="row">
-        <div class="col-md-1">
-
-        </div>
-        <!--One column in any screen device-->
-        <div class="col-md-10">
-          <div class="card">
-            <div class="card-header bg-primary text-white text-center h2" role="heading">
-              Forum Posts
-            </div>
-            <div class="card-body">              
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam amet ipsum ipsa, distinctio ducimus voluptate voluptatum sed impedit nulla necessitatibus! Rerum delectus quaerat dolores illo quam id quasi rem modi.
+          <div class="col-md-1"></div>
+          <!-- Buy Chips Form -->
+          <div class="col-md-5">
+              <div class="card">
+                  <div class="card-header bg-primary text-white text-center h2">
+                      Buy Chips
+                  </div>
+                  <div class="card-body">
+                    <form id="buyChipsForm">
+                        <div class="form-group">
+                            <label for="amount">Amount ($):</label>
+                            <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount in dollars" required>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Buy Chips</button>
+                    </form>
+                  </div>
               </div>
           </div>
-        </div>
-        <div class="col-md-1"> </div>
+  
+          <!-- Transaction History Table -->
+          <div class="col-md-5">
+              <div class="card">
+                  <div class="card-header bg-primary text-white text-center h2">
+                      Transaction History
+                  </div>
+                  <div class="card-body">
+                      <table class="table table-striped">
+                          <thead>
+                              <tr>
+                                  <th>Date</th>
+                                  <th>Amount</th>
+                              </tr>
+                          </thead>
+                          <tbody id="transactionHistory">
+                              <!-- JavaScript or server-side templating fills this -->
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-1"></div>
       </div>
-    </section>
+  </section>
+  
     <section id="Search Posts">
       <div class="row">
         <div class="col-md-1">
