@@ -105,6 +105,42 @@ memberController.get('/getTransactions', async (request, response) => {
     response.status(200).json(transactions);
 });
 
+memberController.get('/getAllUsers', async (request, response) => {
+    // Find all users
+    const users = await User.find({});
 
+    // Send the users back to the client
+    response.status(200).json(users);
+});
+
+//Find all transactions
+memberController.get('/getAllTransactions', async (request, response) => {
+    // Find all transactions and populate the user field
+    const transactions = await Transaction.find({}).populate('user');
+
+    // Send the transactions back to the client
+    response.status(200).json(transactions);
+});
+
+// Handles deleting a user
+
+memberController.delete('/deleteUser/:id', async (request, response) => {
+    const id = request.params.id;
+
+    // Delete the user
+    await User.findByIdAndDelete(id);
+
+    response.status(200).json({ success: 'User deleted' });
+});
+
+// Handles deleting a transaction
+memberController.delete('/deleteTransaction/:id', async (request, response) => {
+    const id = request.params.id;
+
+    // Delete the transaction
+    await Transaction.findByIdAndDelete(id);
+
+    response.status(200).json({ success: 'Transaction deleted' });
+});
 
 module.exports = memberController;

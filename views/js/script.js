@@ -149,6 +149,10 @@
     getTransactionsAndBuildTable();
   };
 
+  // ---------------------------------------------------------------------------------------------------
+  // Buy Chips Functionality
+  // ---------------------------------------------------------------------------------------------------
+
   document
     .getElementById("buyChipsForm")
     .addEventListener("submit", addTransaction);
@@ -213,6 +217,116 @@
     });
   }
 
+  // ---------------------------------------------------------------------------------------------------
+
+  //----------------------------------------------------
+  // Admin functions
+  //----------------------------------------------------
+
+  async function getAllUsers() {
+    const response = await fetch("/getAllUsers");
+    const users = await response.json();
+
+    const table = document.getElementById("userManagement");
+
+    // Clear the table
+    while (table.firstChild) {
+      table.removeChild(table.firstChild);
+    }
+
+    // Add a row for each user
+    users.forEach((user) => {
+      const row = table.insertRow(-1);
+      const usernameCell = row.insertCell(0);
+      const roleCell = row.insertCell(1);
+      const sinceCell = row.insertCell(2);
+      const actionCell = row.insertCell(3);
+
+      usernameCell.textContent = user.email;
+      roleCell.textContent = user.role;
+      sinceCell.textContent = new Date(user.since).toLocaleString();
+
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", async () => {
+        // Show a confirmation dialog
+        if (confirm("Are you sure you want to delete this user?")) {
+          const response = await fetch("/deleteUser/" + user._id, {
+            method: "DELETE",
+          });
+          const result = await response.json();
+
+          // Handle the response here...
+          if (result.error) {
+            console.log(result.error);
+          } else {
+            console.log(result.success);
+            // Show a success message
+            alert("User deleted successfully");
+          }
+
+          // Remove the row from the table
+          row.remove();
+        }
+      });
+      actionCell.appendChild(deleteButton);
+    });
+  }
+
+async function getAllTransactions() {
+    const response = await fetch("/getAllTransactions?email=" + activeEmail);
+    const transactions = await response.json();
+
+    const table = document.getElementById("transactionManagement");
+
+    // Clear the table
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+
+    // Add a row for each transaction
+    transactions.forEach((transaction) => {
+        const row = table.insertRow(-1);
+        const userIdCell = row.insertCell(0);
+        const amountCell = row.insertCell(1);
+        const dateCell = row.insertCell(2);
+        const actionCell = row.insertCell(3);
+
+        userIdCell.textContent = transaction.user.email;
+        amountCell.textContent = transaction.amount;
+        dateCell.textContent = new Date(transaction.date).toLocaleString();
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", async () => {
+            // Show a confirmation dialog
+            if (confirm("Are you sure you want to delete this transaction?")) {
+                const response = await fetch("/deleteTransaction/" + transaction._id, {
+                    method: "DELETE",
+                });
+                const result = await response.json();
+
+                // Handle the response here...
+                if (result.error) {
+                    console.log(result.error);
+                } else {
+                    console.log(result.success);
+                    // Show a success message
+                    alert("Transaction deleted successfully");
+                }
+
+                // Remove the row from the table
+                row.remove();
+            }
+        });
+        actionCell.appendChild(deleteButton);
+    });
+}
+
+  //----------------------------------------------------
+  // Functions to manage the navigation
+  //----------------------------------------------------
+
   const setActivePage = (section) => {
     console.log(section);
     let menuItems = document.querySelectorAll("a[data-page]");
@@ -230,33 +344,42 @@
         document.title = state.title;
         show(section);
         setActivePage(name);
+
+        // If the section is the admin section, load the users and transactions
+        if (name === "adminTab") {
+          getAllUsers();
+          getAllTransactions();
+        }
       } else hide(section);
     });
   };
-const authorize = (isAuthenticated, username) => {
+  const authorize = (isAuthenticated, username) => {
     const authenticated = document.querySelectorAll("[data-authenticated]");
     const nonAuthenticated = document.querySelector("[data-nonAuthenticated]");
-    const adminAuthenticated = document.querySelectorAll("[data-authenticated-admin]"); // Select elements with the data-authenticated-admin attribute
-    const adminTab = document.getElementById('adminTab'); // Get the admin tab
+    const adminAuthenticated = document.querySelectorAll(
+      "[data-authenticated-admin]"
+    ); // Select elements with the data-authenticated-admin attribute
+    const adminTab = document.getElementById("adminTab"); // Get the admin tab
 
     if (isAuthenticated) {
-        authenticated.forEach((element) => show(element));
-        hide(nonAuthenticated);
+      authenticated.forEach((element) => show(element));
+      hide(nonAuthenticated);
 
-        // If the username is "admin", show the admin tab and the elements with the data-authenticated-admin attribute
-        if (username === 'admin') {
-            adminAuthenticated.forEach((element) => show(element)); // Show elements with the data-authenticated-admin attribute
-        } else {
-            hide(adminTab);
-            adminAuthenticated.forEach((element) => hide(element)); // Hide elements with the data-authenticated-admin attribute
-        }
+      // If the username is "admin", show the admin tab and the elements with the data-authenticated-admin attribute
+      if (username === "admin") {
+        adminAuthenticated.forEach((element) => show(element));
+      } else {
+        hide(adminTab);
+        adminAuthenticated.forEach((element) => hide(element));
+      }
     } else {
-        authenticated.forEach((element) => hide(element));
-        show(nonAuthenticated);
-        hide(adminTab); // Hide the admin tab
-        adminAuthenticated.forEach((element) => hide(element)); // Hide elements with the data-authenticated-admin attribute
+      authenticated.forEach((element) => hide(element));
+      show(nonAuthenticated);
+      hide(adminTab);
+      adminAuthenticated.forEach((element) => hide(element));
     }
-};
+  };
+
   // Handle forward/back buttons
   window.onpopstate = (event) => {
     // If a state has been provided, we have a "simulated" page
@@ -266,6 +389,9 @@ const authorize = (isAuthenticated, username) => {
       displaySection(event.state);
     }
   };
+
+  //--------------------------------------------------------------------------------------------------------------------------------
+
   document.addEventListener("DOMContentLoaded", () => {
     displaySection(navigation.home);
     window.history.replaceState(navigation.home, "", document.location.href);
