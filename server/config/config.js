@@ -7,6 +7,7 @@
     config.LOG_FILE = `${__dirname}/../logs/nodejs.log`
     config.MEMBERS = `${__dirname}/../../models/data/members.json`
     config.USERS = `${__dirname}/../../models/data/users.json`
+    config.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/2600';
     config.logFile = (request, logs) => {
         log = {}
         log.date = new Date()

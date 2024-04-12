@@ -5,6 +5,7 @@
     const config = require(`${__dirname}/config/config`)
     const utils = require(`${__dirname}/utils`)
     const express = require("express")   
+    const mongoose = require('mongoose'); // Import mongoose
 
     const app = express()
    
@@ -17,8 +18,11 @@
     })
     app.use(homeController)
     app.use(memberController)   
-   
-        
+
+    // Connect to MongoDB
+    mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+        .then(() => console.log('MongoDB Database connected!'))
+        .catch(err => console.log(err));
 
     // Start Node.js HTTP webapp
     app.listen(config.PORT, "localhost", () => {
