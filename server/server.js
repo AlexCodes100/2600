@@ -20,7 +20,7 @@
     app.use(memberController)   
 
     // Connect to MongoDB
-    mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(config.MONGODB_ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => console.log('MongoDB Database connected!'))
         .catch(err => console.log(err));
 
