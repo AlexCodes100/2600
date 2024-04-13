@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server/server.js"
   },
-  "author": "M. Bouguerra",
+  "author": "R. Mendez",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.0"
